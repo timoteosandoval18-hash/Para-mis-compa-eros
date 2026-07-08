@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para todos mis amigos y maestra ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Patrick+Hand&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: linear-gradient(135deg, #ffeef8 0%, #ffd6e7 100%);
+            font-family: 'Patrick Hand', cursive;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .libro-container {
+            perspective: 2000px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .libro {
+            position: relative;
+            width: 100%;
+            height: 650px;
+            transform-style: preserve-3d;
+        }
+
+        .pagina {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fffbf7;
+            border-radius: 5px 15px 15px 5px;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+            padding: 30px 25px;
+            transform-origin: left center;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            backface-visibility: hidden;
+            overflow-y: auto;
+            border-left: 8px solid #ff8fab;
+        }
+
+        .pagina.volteada {
+            transform: rotateY(-180deg);
+        }
+
+        .portada {
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .portada h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.6rem;
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+            line-height: 1.3;
+            padding: 0 20px;
+        }
+
+        .portada .corazon-portada {
+            font-size: 4rem;
+            margin-top: 20px;
+            animation: latir 1.5s infinite;
+        }
+
+        @keyframes latir {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .contenido-pagina h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff6b9d;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .contenido-pagina p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #4a4a4a;
+            text-align: justify;
+            white-space: pre-line;
+        }
+
+        .bloque-maestra {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #ffd6e7;
+        }
+
+        .bloque-maestra:last-child {
+            border-bottom: none;
+            margin-bottom: 10px;
+        }
+
+        .bloque-maestra img {
+            width: 100%;
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 4px solid #ffb3c6;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.2);
+        }
+
+        .texto-foto {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #ff6b9d;
+            margin-top: 8px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .flecha-siguiente, .flecha-anterior {
+            position: absolute;
+            bottom: 20px;
+            width: 45px;
+            height: 45px;
+            background: #ff6b9d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+            transition: all 0.3s;
+            z-index: 20;
+            user-select: none;
+        }
+
+        .flecha-siguiente:hover, .flecha-anterior:hover {
+            background: #ff8fab;
+            transform: scale(1.1);
+        }
+
+        .flecha-siguiente { right: 20px; }
+        .flecha-anterior { left: 20px; }
+
+        .flecha-siguiente::after {
+            content: '▶';
+            color: white;
+            font-size: 1.1rem;
+            margin-left: 3px;
+        }
+
+        .flecha-anterior::after {
+            content: '◀';
+            color: white;
+            font-size: 1.1rem;
+            margin-right: 3px;
+        }
+
+        .numero-pagina {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ff8fab;
+            font-size: 0.9rem;
+        }
+
+        .pagina::-webkit-scrollbar { width: 6px; }
+        .pagina::-webkit-scrollbar-thumb {
+            background: #ffb3c6;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="libro-container">
+        <div class="libro" id="libro">
+            
+            <!-- PORTADA -->
+            <div class="pagina portada" data-pagina="0">
+                <h1>Para todos mis amigos y maestra❤️</h1>
+                <div class="corazon-portada">💕</div>
+                <div class="flecha-siguiente" onclick="siguientePagina()"></div>
+            </div>
+
+            <!-- PÁGINA 1 - DEDICATORIA -->
+            <div class="pagina" data-pagina="1" style="z-index: 9;">
+                <div class="contenido-pagina">
+                    <h2>Para ustedes 💖</h2>
+                    <p>Felicidades a todos ustedes, son más que mis amigos todos, incluidos hasta con los que no hablo. Los voy a extrañar un montón a todos, fue algo muy maravilloso para mí conocerlos a todos. Me encariñé tanto con ustedes que ya no me quiero graduar. Pero pues así es la vida, aún estamos jóvenes nos queda mucho por delante. De verdad me da emoción verlos a todos graduados, quiero verlos a todos cumplír sus sueños y todo. Los voy a extrañar un montón sinceramente se los digo. No acostumbro a hablar así pero a ustedes les tengo un cariño enorme. Tuvimos momentos muy felices y otros no tan felices pero pues eso pasa. Échenle ganas a la escuela plebes quiero verlos con cumplir sus metas y sueños.
+
+Este no es un adiós, es un hasta luego. Muchas felicidades mugrosos.💕</p>
+                </div>
+                <div class="flecha-anterior" onclick="anteriorPagina()"></div>
+                <div class="flecha-siguiente" onclick="siguientePagina()"></div>
+                <div class="numero-pagina">1</div>
+            </div>
+
+            <!-- PÁGINA 2 - MI MAESTRA CON TODAS LAS FOTOS -->
+            <div class="pagina" data-pagina="2" style="z-index: 8;">
+                <div class="contenido-pagina">
+                    <h2>Mi maestra 👩‍🏫💕</h2>
+                    
+                    <div class="bloque-maestra">
+                        <img src="maestra1.jpg" alt="Maestra haciendo paz">
+                        <p class="texto-foto">Maestra, muchas gracias por todo, usted es una maestra muy linda y amable. Me dió mucho gusto que me diera clases una maestra como usted.🤍</p>
+                    </div>
+
+                    <div class="bloque-maestra">
+                        <img src="maestra2.jpg" alt="Maestra con amigas">
+                        <p class="texto-foto">Usted es una maestra muy hermosa, única, inteligente, amable, tierna y muchas cosas que ni siquiera puedo describir porque las palabras se me quedan cortas. 💕</p>
+                    </div>
+
+                    <div class="bloque-maestra">
+                        <img src="maestra3.jpg" alt="Maestra escribiendo">
+                        <p class="texto-foto">Me encanta su forma de ser, quisiera tener la paciencia que usted tiene al tener que soportar nuestros comportamientos y actitudes. La queremos mucho maestra. 🩷</p>
+                    </div>
+
+                    <div class="bloque-maestra">
+                        <img src="maestra4.jpg" alt="Maestra sentada">
+                        <p class="texto-foto">Muchasss graciasss por todo maestra, por soportar a cada uno de nosotros, la admiramos mucho maestra.❤️</p>
+                    </div>
+
+                </div>
+                <div class="flecha-anterior" onclick="anteriorPagina()"></div>
+                <div class="flecha-siguiente" onclick="siguientePagina()"></div>
+                <div class="numero-pagina">2</div>
+            </div>
+
+            <!-- PÁGINA 3 - FOTO ABRAZO -->
+            <div class="pagina" data-pagina="3" style="z-index: 7;">
+                <div class="contenido-pagina">
+                    <h2>Recuerdos lindos 📸</h2>
+                    <img src="maestra5.jpg" alt="Abrazo con maestra">
+                    <p class="texto-foto">La quiero mucho maestra, la aprecio mucho. Me encanta como nos trata a pesar de las cosas malas que hemos hecho, me gustaría estar otros años más con usted y con todos mis compañeros.💗</p>
+                </div>
+                <div class="flecha-anterior" onclick="anteriorPagina()"></div>
+                <div class="flecha-siguiente" onclick="siguientePagina()"></div>
+                <div class="numero-pagina">3</div>
+            </div>
+
+            <!-- PÁGINA 4 - FOTO GRUPAL -->
+            <div class="pagina" data-pagina="4" style="z-index: 6;">
+                <div class="contenido-pagina">
+                    <h2>Los mejores momentos 🎉</h2>
+                    <img src="maestra6.jpg" alt="Foto grupal">
+                    <p class="texto-foto">La maestra más linda de todas, la más única, la más tierna, la más perfecta, la más admirable. Usted es una persona muy especial para mí y para todos nosotros, al igual que el maestro Jonathan. Usted es un ejemplo a seguir, le deseo lo mejor a usted y a cada uno de mis compañeros y a todos. Muchas gracias por todo maestra la quiero mucho. 💕</p>
+                </div>
+                <div class="flecha-anterior" onclick="anteriorPagina()"></div>
+                <div class="numero-pagina">4</div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let paginaActual = 0;
+        const paginas = document.querySelectorAll('.pagina');
+        const totalPaginas = paginas.length;
+
+        function actualizarLibro() {
+            paginas.forEach((pagina, index) => {
+                if (index < paginaActual) {
+                    pagina.classList.add('volteada');
+                } else {
+                    pagina.classList.remove('volteada');
+                }
+            });
+        }
+
+        function siguientePagina() {
+            if (paginaActual < totalPaginas - 1) {
+                paginaActual++;
+                actualizarLibro();
+            }
+        }
+
+        function anteriorPagina() {
+            if (paginaActual > 0) {
+                paginaActual--;
+                actualizarLibro();
+            }
+        }
+
+        actualizarLibro();
+    </script>
+</body>
+      </html>
